@@ -1,0 +1,1619 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+        h2 { margin-top: 0; }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+        }
+        .chart-wrapper {
+            position: relative;
+        }
+        .chart {
+            height: 400px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 10px;
+        }
+        .fullscreen-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+            background-color: #ffffffcc;
+            border: none;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        #fullscreenModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #fullscreenChart {
+            width: 90vw;
+            height: 90vh;
+        }
+        #exitButton {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 28px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10001;
+        }
+    </style>
+</head>
+<body>
+    <h2>ECharts Dashboard</h2>
+
+    <div class="cards">
+        
+    <div class="card">
+        <h3>TransactionID</h3>
+        <p><strong>Type:</strong> Numeric</p>
+        <p><strong>Top Value:</strong> 1</p>
+        <p><strong>Sample:</strong> </p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>min</td><td>1</td></tr><tr><td>5%</td><td>1.000</td></tr><tr><td>25%</td><td>1962985.000</td></tr><tr><td>50%</td><td>3925473.000</td></tr><tr><td>75%</td><td>6102503.000</td></tr><tr><td>95%</td><td>8100000.000</td></tr><tr><td>max</td><td>8100000</td></tr><tr><td>range</td><td>8099999</td></tr><tr><td>iqr</td><td>4139518.000</td></tr><tr><td>mean</td><td>4050000.500</td></tr><tr><td>std</td><td>2338268.735</td></tr><tr><td>variance</td><td>5467500675000.000</td></tr><tr><td>cv</td><td>0.577</td></tr><tr><td>kurtosis</td><td>-1.200</td></tr><tr><td>skewness</td><td>0.000</td></tr><tr><td>sum</td><td>32805004050000</td></tr><tr><td>mad</td><td>1911928.000</td></tr><tr><td>monotonic</td><td>0</td></tr><tr><td>n_distinct</td><td>8100000</td></tr><tr><td>p_distinct</td><td>1.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr><tr><td>n_zeros</td><td>0</td></tr><tr><td>p_zeros</td><td>0.000</td></tr><tr><td>n_negative</td><td>0</td></tr><tr><td>p_negative</td><td>0.000</td></tr><tr><td>n_infinite</td><td>0</td></tr><tr><td>p_infinite</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>CustomerName</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> Aaron Abbott</p>
+        <p><strong>Sample:</strong> Scott Riley, Natasha Downs, Curtis Turner</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>849512</td></tr><tr><td>p_distinct</td><td>0.105</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>Email</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> aabbott@example.com</p>
+        <p><strong>Sample:</strong> hughesmichael@example.com, kristenramirez@example.net, stevenjones@example.org</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>1721682</td></tr><tr><td>p_distinct</td><td>0.213</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>Phone</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> (200)200-0403x765</p>
+        <p><strong>Sample:</strong> 885.866.3087, 442.211.5103x710, 001-885-467-6412x52294</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>8099864</td></tr><tr><td>p_distinct</td><td>1.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>Country</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> Australia</p>
+        <p><strong>Sample:</strong> Japan, France, France</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>10</td></tr><tr><td>p_distinct</td><td>0.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>City</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> Aaronberg</p>
+        <p><strong>Sample:</strong> Ashleyside, West Lisa, Ryantown</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>118828</td></tr><tr><td>p_distinct</td><td>0.015</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>Product</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> Camera</p>
+        <p><strong>Sample:</strong> Smartphone, Laptop, Smartphone</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>8</td></tr><tr><td>p_distinct</td><td>0.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>Category</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> Accessories</p>
+        <p><strong>Sample:</strong> Office Supplies, Office Supplies, Office Supplies</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>3</td></tr><tr><td>p_distinct</td><td>0.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>Quantity</h3>
+        <p><strong>Type:</strong> Numeric</p>
+        <p><strong>Top Value:</strong> 1</p>
+        <p><strong>Sample:</strong> </p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>min</td><td>1</td></tr><tr><td>5%</td><td>1.000</td></tr><tr><td>25%</td><td>3.000</td></tr><tr><td>50%</td><td>6.000</td></tr><tr><td>75%</td><td>8.000</td></tr><tr><td>95%</td><td>10.000</td></tr><tr><td>max</td><td>10</td></tr><tr><td>range</td><td>9</td></tr><tr><td>iqr</td><td>5.000</td></tr><tr><td>mean</td><td>5.500</td></tr><tr><td>std</td><td>2.872</td></tr><tr><td>variance</td><td>8.251</td></tr><tr><td>cv</td><td>0.522</td></tr><tr><td>kurtosis</td><td>-1.224</td></tr><tr><td>skewness</td><td>0.000</td></tr><tr><td>sum</td><td>44548697</td></tr><tr><td>mad</td><td>3.000</td></tr><tr><td>monotonic</td><td>0</td></tr><tr><td>n_distinct</td><td>10</td></tr><tr><td>p_distinct</td><td>0.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr><tr><td>n_zeros</td><td>0</td></tr><tr><td>p_zeros</td><td>0.000</td></tr><tr><td>n_negative</td><td>0</td></tr><tr><td>p_negative</td><td>0.000</td></tr><tr><td>n_infinite</td><td>0</td></tr><tr><td>p_infinite</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>UnitPrice</h3>
+        <p><strong>Type:</strong> Numeric</p>
+        <p><strong>Top Value:</strong> 50.0</p>
+        <p><strong>Sample:</strong> </p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>min</td><td>50.000</td></tr><tr><td>5%</td><td>50.000</td></tr><tr><td>25%</td><td>554.750</td></tr><tr><td>50%</td><td>1009.060</td></tr><tr><td>75%</td><td>1447.790</td></tr><tr><td>95%</td><td>2000.000</td></tr><tr><td>max</td><td>2000.000</td></tr><tr><td>range</td><td>1950.000</td></tr><tr><td>iqr</td><td>893.040</td></tr><tr><td>mean</td><td>1025.057</td></tr><tr><td>std</td><td>563.037</td></tr><tr><td>variance</td><td>317011.054</td></tr><tr><td>cv</td><td>0.549</td></tr><tr><td>kurtosis</td><td>-1.201</td></tr><tr><td>skewness</td><td>0.000</td></tr><tr><td>sum</td><td>8302964253.010</td></tr><tr><td>mad</td><td>480.060</td></tr><tr><td>monotonic</td><td>0</td></tr><tr><td>n_distinct</td><td>195001</td></tr><tr><td>p_distinct</td><td>0.024</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr><tr><td>n_zeros</td><td>0</td></tr><tr><td>p_zeros</td><td>0.000</td></tr><tr><td>n_negative</td><td>0</td></tr><tr><td>p_negative</td><td>0.000</td></tr><tr><td>n_infinite</td><td>0</td></tr><tr><td>p_infinite</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>TotalAmount</h3>
+        <p><strong>Type:</strong> Numeric</p>
+        <p><strong>Top Value:</strong> 37.51</p>
+        <p><strong>Sample:</strong> </p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>min</td><td>37.510</td></tr><tr><td>5%</td><td>37.510</td></tr><tr><td>25%</td><td>1656.050</td></tr><tr><td>50%</td><td>3713.890</td></tr><tr><td>75%</td><td>6740.930</td></tr><tr><td>95%</td><td>19992.700</td></tr><tr><td>max</td><td>19992.700</td></tr><tr><td>range</td><td>19955.190</td></tr><tr><td>iqr</td><td>5084.880</td></tr><tr><td>mean</td><td>4932.100</td></tr><tr><td>std</td><td>4029.949</td></tr><tr><td>variance</td><td>16240487.473</td></tr><tr><td>cv</td><td>0.817</td></tr><tr><td>kurtosis</td><td>0.227</td></tr><tr><td>skewness</td><td>0.971</td></tr><tr><td>sum</td><td>39950009959.080</td></tr><tr><td>mad</td><td>2463.890</td></tr><tr><td>monotonic</td><td>0</td></tr><tr><td>n_distinct</td><td>1497278</td></tr><tr><td>p_distinct</td><td>0.185</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr><tr><td>n_zeros</td><td>0</td></tr><tr><td>p_zeros</td><td>0.000</td></tr><tr><td>n_negative</td><td>0</td></tr><tr><td>p_negative</td><td>0.000</td></tr><tr><td>n_infinite</td><td>0</td></tr><tr><td>p_infinite</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>PurchaseDate</h3>
+        <p><strong>Type:</strong> DateTime</p>
+        <p><strong>Top Value:</strong> 2020-06-08</p>
+        <p><strong>Sample:</strong> </p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>min</td><td>2020-06-08</td></tr><tr><td>max</td><td>2025-06-08</td></tr><tr><td>range</td><td>1826 days, 0:00:00</td></tr><tr><td>n_distinct</td><td>1827</td></tr><tr><td>p_distinct</td><td>0.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>PaymentMethod</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> Cash</p>
+        <p><strong>Sample:</strong> Cash, PayPal, Credit Card</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>4</td></tr><tr><td>p_distinct</td><td>0.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>SalesRep</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> Aaron Abbott</p>
+        <p><strong>Sample:</strong> Keith Brown, Yolanda Lee, Brandon Stewart</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>850023</td></tr><tr><td>p_distinct</td><td>0.105</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>Region</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> Central</p>
+        <p><strong>Sample:</strong> North, South, East</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>5</td></tr><tr><td>p_distinct</td><td>0.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>Discount</h3>
+        <p><strong>Type:</strong> Numeric</p>
+        <p><strong>Top Value:</strong> 0.0</p>
+        <p><strong>Sample:</strong> </p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>min</td><td>0.000</td></tr><tr><td>5%</td><td>0.000</td></tr><tr><td>25%</td><td>0.070</td></tr><tr><td>50%</td><td>0.120</td></tr><tr><td>75%</td><td>0.190</td></tr><tr><td>95%</td><td>0.250</td></tr><tr><td>max</td><td>0.250</td></tr><tr><td>range</td><td>0.250</td></tr><tr><td>iqr</td><td>0.120</td></tr><tr><td>mean</td><td>0.125</td></tr><tr><td>std</td><td>0.072</td></tr><tr><td>variance</td><td>0.005</td></tr><tr><td>cv</td><td>0.578</td></tr><tr><td>kurtosis</td><td>-1.192</td></tr><tr><td>skewness</td><td>-0.001</td></tr><tr><td>sum</td><td>1012863.900</td></tr><tr><td>mad</td><td>0.120</td></tr><tr><td>monotonic</td><td>0</td></tr><tr><td>n_distinct</td><td>26</td></tr><tr><td>p_distinct</td><td>0.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr><tr><td>n_zeros</td><td>162034</td></tr><tr><td>p_zeros</td><td>0.020</td></tr><tr><td>n_negative</td><td>0</td></tr><tr><td>p_negative</td><td>0.000</td></tr><tr><td>n_infinite</td><td>0</td></tr><tr><td>p_infinite</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>Profit</h3>
+        <p><strong>Type:</strong> Numeric</p>
+        <p><strong>Top Value:</strong> 1.94</p>
+        <p><strong>Sample:</strong> </p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>min</td><td>1.940</td></tr><tr><td>5%</td><td>1.940</td></tr><tr><td>25%</td><td>250.170</td></tr><tr><td>50%</td><td>569.650</td></tr><tr><td>75%</td><td>1096.010</td></tr><tr><td>95%</td><td>5957.530</td></tr><tr><td>max</td><td>5957.530</td></tr><tr><td>range</td><td>5955.590</td></tr><tr><td>iqr</td><td>845.840</td></tr><tr><td>mean</td><td>863.421</td></tr><tr><td>std</td><td>842.403</td></tr><tr><td>variance</td><td>709643.205</td></tr><tr><td>cv</td><td>0.976</td></tr><tr><td>kurtosis</td><td>2.652</td></tr><tr><td>skewness</td><td>1.597</td></tr><tr><td>sum</td><td>6993712199.210</td></tr><tr><td>mad</td><td>396.650</td></tr><tr><td>monotonic</td><td>0</td></tr><tr><td>n_distinct</td><td>421888</td></tr><tr><td>p_distinct</td><td>0.052</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr><tr><td>n_zeros</td><td>0</td></tr><tr><td>p_zeros</td><td>0.000</td></tr><tr><td>n_negative</td><td>0</td></tr><tr><td>p_negative</td><td>0.000</td></tr><tr><td>n_infinite</td><td>0</td></tr><tr><td>p_infinite</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    <div class="card">
+        <h3>CustomerNote</h3>
+        <p><strong>Type:</strong> Categorical</p>
+        <p><strong>Top Value:</strong> A American find near red. Ahead true treat role number.</p>
+        <p><strong>Sample:</strong> Reality huge play nearly model. Develop perform ability value., Drive short standard meeting. Traditional very chair identify forget maintain so., Many what expert job. College fly language read bad.</p>
+        <table style="width:100%; font-size: 0.9em;">
+            <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+            <tbody><tr><td>n_distinct</td><td>8099999</td></tr><tr><td>p_distinct</td><td>1.000</td></tr><tr><td>n_missing</td><td>0</td></tr><tr><td>p_missing</td><td>0.000</td></tr></tbody>
+        </table>
+    </div>
+    
+    </div>
+
+    <div class="grid">
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_Pearson_0')">🔍</button>
+            <div id="chart_Pearson_0" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_Spearman_1')">🔍</button>
+            <div id="chart_Spearman_1" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_sum_2')">🔍</button>
+            <div id="chart_sum_2" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_sum_3')">🔍</button>
+            <div id="chart_sum_3" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_line_4')">🔍</button>
+            <div id="chart_line_4" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_sum_5')">🔍</button>
+            <div id="chart_sum_5" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_max_6')">🔍</button>
+            <div id="chart_max_6" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_mean_7')">🔍</button>
+            <div id="chart_mean_7" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_line_8')">🔍</button>
+            <div id="chart_line_8" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_line_9')">🔍</button>
+            <div id="chart_line_9" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_sum_10')">🔍</button>
+            <div id="chart_sum_10" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_mean_11')">🔍</button>
+            <div id="chart_mean_11" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_count_12')">🔍</button>
+            <div id="chart_count_12" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_line_13')">🔍</button>
+            <div id="chart_line_13" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_mean_14')">🔍</button>
+            <div id="chart_mean_14" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_pie_15')">🔍</button>
+            <div id="chart_pie_15" class="chart"></div>
+        </div>
+        
+        <div class="chart-wrapper">
+            <button class="fullscreen-button" onclick="enlargeChart('chart_donut_16')">🔍</button>
+            <div id="chart_donut_16" class="chart"></div>
+        </div>
+        
+    </div>
+
+    <script>
+        
+        var chart_0 = echarts.init(document.getElementById('chart_Pearson_0'));
+        chart_0.setOption({
+  "title": {
+    "text": "Pearson Correlation",
+    "left": "center"
+  },
+  "tooltip": {
+    "position": "top"
+  },
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "TransactionID",
+      "Quantity",
+      "UnitPrice",
+      "TotalAmount",
+      "Discount",
+      "Profit"
+    ],
+    "axisLabel": {
+      "rotate": 45
+    }
+  },
+  "yAxis": {
+    "type": "category",
+    "data": [
+      "TransactionID",
+      "Quantity",
+      "UnitPrice",
+      "TotalAmount",
+      "Discount",
+      "Profit"
+    ]
+  },
+  "visualMap": {
+    "min": -1,
+    "max": 1,
+    "calculable": true,
+    "orient": "horizontal",
+    "left": "center",
+    "bottom": "5%"
+  },
+  "series": [
+    {
+      "name": "correlation",
+      "type": "heatmap",
+      "data": [
+        [
+          0,
+          0,
+          1.0
+        ],
+        [
+          1,
+          0,
+          0.0
+        ],
+        [
+          2,
+          0,
+          0.0
+        ],
+        [
+          3,
+          0,
+          0.0
+        ],
+        [
+          4,
+          0,
+          0.001
+        ],
+        [
+          5,
+          0,
+          0.0
+        ],
+        [
+          0,
+          1,
+          0.0
+        ],
+        [
+          1,
+          1,
+          1.0
+        ],
+        [
+          2,
+          1,
+          -0.0
+        ],
+        [
+          3,
+          1,
+          0.639
+        ],
+        [
+          4,
+          1,
+          0.0
+        ],
+        [
+          5,
+          1,
+          0.535
+        ],
+        [
+          0,
+          2,
+          0.0
+        ],
+        [
+          1,
+          2,
+          -0.0
+        ],
+        [
+          2,
+          2,
+          1.0
+        ],
+        [
+          3,
+          2,
+          0.672
+        ],
+        [
+          4,
+          2,
+          -0.0
+        ],
+        [
+          5,
+          2,
+          0.563
+        ],
+        [
+          0,
+          3,
+          0.0
+        ],
+        [
+          1,
+          3,
+          0.639
+        ],
+        [
+          2,
+          3,
+          0.672
+        ],
+        [
+          3,
+          3,
+          1.0
+        ],
+        [
+          4,
+          3,
+          -0.101
+        ],
+        [
+          5,
+          3,
+          0.838
+        ],
+        [
+          0,
+          4,
+          0.001
+        ],
+        [
+          1,
+          4,
+          0.0
+        ],
+        [
+          2,
+          4,
+          -0.0
+        ],
+        [
+          3,
+          4,
+          -0.101
+        ],
+        [
+          4,
+          4,
+          1.0
+        ],
+        [
+          5,
+          4,
+          -0.085
+        ],
+        [
+          0,
+          5,
+          0.0
+        ],
+        [
+          1,
+          5,
+          0.535
+        ],
+        [
+          2,
+          5,
+          0.563
+        ],
+        [
+          3,
+          5,
+          0.838
+        ],
+        [
+          4,
+          5,
+          -0.085
+        ],
+        [
+          5,
+          5,
+          1.0
+        ]
+      ],
+      "label": {
+        "show": true
+      },
+      "emphasis": {
+        "itemStyle": {
+          "shadowBlur": 10,
+          "shadowColor": "rgba(0,0,0,0.5)"
+        }
+      }
+    }
+  ]
+});
+        
+        var chart_1 = echarts.init(document.getElementById('chart_Spearman_1'));
+        chart_1.setOption({
+  "title": {
+    "text": "Spearman Correlation",
+    "left": "center"
+  },
+  "tooltip": {
+    "position": "top"
+  },
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "TransactionID",
+      "Quantity",
+      "UnitPrice",
+      "TotalAmount",
+      "Discount",
+      "Profit"
+    ],
+    "axisLabel": {
+      "rotate": 45
+    }
+  },
+  "yAxis": {
+    "type": "category",
+    "data": [
+      "TransactionID",
+      "Quantity",
+      "UnitPrice",
+      "TotalAmount",
+      "Discount",
+      "Profit"
+    ]
+  },
+  "visualMap": {
+    "min": -1,
+    "max": 1,
+    "calculable": true,
+    "orient": "horizontal",
+    "left": "center",
+    "bottom": "5%"
+  },
+  "series": [
+    {
+      "name": "correlation",
+      "type": "heatmap",
+      "data": [
+        [
+          0,
+          0,
+          1.0
+        ],
+        [
+          1,
+          0,
+          0.0
+        ],
+        [
+          2,
+          0,
+          0.0
+        ],
+        [
+          3,
+          0,
+          0.0
+        ],
+        [
+          4,
+          0,
+          0.001
+        ],
+        [
+          5,
+          0,
+          0.0
+        ],
+        [
+          0,
+          1,
+          0.0
+        ],
+        [
+          1,
+          1,
+          1.0
+        ],
+        [
+          2,
+          1,
+          -0.0
+        ],
+        [
+          3,
+          1,
+          0.645
+        ],
+        [
+          4,
+          1,
+          0.0
+        ],
+        [
+          5,
+          1,
+          0.575
+        ],
+        [
+          0,
+          2,
+          0.0
+        ],
+        [
+          1,
+          2,
+          -0.0
+        ],
+        [
+          2,
+          2,
+          1.0
+        ],
+        [
+          3,
+          2,
+          0.699
+        ],
+        [
+          4,
+          2,
+          -0.0
+        ],
+        [
+          5,
+          2,
+          0.628
+        ],
+        [
+          0,
+          3,
+          0.0
+        ],
+        [
+          1,
+          3,
+          0.645
+        ],
+        [
+          2,
+          3,
+          0.699
+        ],
+        [
+          3,
+          3,
+          1.0
+        ],
+        [
+          4,
+          3,
+          -0.082
+        ],
+        [
+          5,
+          3,
+          0.896
+        ],
+        [
+          0,
+          4,
+          0.001
+        ],
+        [
+          1,
+          4,
+          0.0
+        ],
+        [
+          2,
+          4,
+          -0.0
+        ],
+        [
+          3,
+          4,
+          -0.082
+        ],
+        [
+          4,
+          4,
+          1.0
+        ],
+        [
+          5,
+          4,
+          -0.072
+        ],
+        [
+          0,
+          5,
+          0.0
+        ],
+        [
+          1,
+          5,
+          0.575
+        ],
+        [
+          2,
+          5,
+          0.628
+        ],
+        [
+          3,
+          5,
+          0.896
+        ],
+        [
+          4,
+          5,
+          -0.072
+        ],
+        [
+          5,
+          5,
+          1.0
+        ]
+      ],
+      "label": {
+        "show": true
+      },
+      "emphasis": {
+        "itemStyle": {
+          "shadowBlur": 10,
+          "shadowColor": "rgba(0,0,0,0.5)"
+        }
+      }
+    }
+  ]
+});
+        
+        var chart_2 = echarts.init(document.getElementById('chart_sum_2'));
+        chart_2.setOption({
+  "title": {
+    "text": "Total Sales Amount by Country"
+  },
+  "tooltip": {},
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "India",
+      "China",
+      "USA",
+      "Japan",
+      "UK",
+      "Canada",
+      "Brazil",
+      "France",
+      "Germany",
+      "Australia"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 3980000000,
+    "max": 4010000000
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "bar",
+      "data": [
+        4004245714.4299984,
+        3999093946.6599936,
+        3998478987.649999,
+        3998051012.150003,
+        3995283595.479993,
+        3993731523.149997,
+        3993731174.9799976,
+        3991941423.6899996,
+        3990026062.840011,
+        3985426518.049993
+      ]
+    }
+  ]
+});
+        
+        var chart_3 = echarts.init(document.getElementById('chart_sum_3'));
+        chart_3.setOption({
+  "title": {
+    "text": "Sales Amount by Payment Method"
+  },
+  "tooltip": {},
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "Cash",
+      "PayPal",
+      "Wire Transfer",
+      "Credit Card"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 9970000000,
+    "max": 10010000000
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "bar",
+      "data": [
+        10005213678.640003,
+        9985555465.749987,
+        9983669947.510012,
+        9975570867.179993
+      ]
+    }
+  ]
+});
+        
+        var chart_4 = echarts.init(document.getElementById('chart_line_4'));
+        chart_4.setOption({
+  "title": {
+    "text": "Average Profit by Product Category"
+  },
+  "tooltip": {
+    "trigger": "axis"
+  },
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "Accessories",
+      "Electronics",
+      "Office Supplies"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 863.0,
+    "max": 863.7
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "line",
+      "data": [
+        863.6332828825017,
+        863.548582731103,
+        863.0819950091472
+      ]
+    }
+  ]
+});
+        
+        var chart_5 = echarts.init(document.getElementById('chart_sum_5'));
+        chart_5.setOption({
+  "title": {
+    "text": "Sales Distribution by Region"
+  },
+  "tooltip": {
+    "trigger": "axis"
+  },
+  "legend": {
+    "data": [
+      "Sales Distribution by Region"
+    ]
+  },
+  "xAxis": {
+    "type": "category",
+    "boundaryGap": false,
+    "data": [
+      "North",
+      "South",
+      "West",
+      "Central",
+      "East"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 7970000000,
+    "max": 8010000000
+  },
+  "series": [
+    {
+      "name": "Sales Distribution by Region",
+      "type": "line",
+      "stack": "Total",
+      "areaStyle": {},
+      "data": [
+        8003630811.939997,
+        7997706814.889999,
+        7992355837.089981,
+        7979361731.890029,
+        7976954763.270014
+      ]
+    }
+  ]
+});
+        
+        var chart_6 = echarts.init(document.getElementById('chart_max_6'));
+        chart_6.setOption({
+  "title": {
+    "text": "Maximum Sale by City"
+  },
+  "tooltip": {},
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "West Vanessa",
+      "Samuelmouth",
+      "Belindamouth",
+      "West Colleen",
+      "South Christophershire",
+      "North Matthewhaven",
+      "Lewiston",
+      "Johnsonport",
+      "East Lynnville",
+      "Christopherfort",
+      "Russellport",
+      "Meganborough",
+      "New Johnview",
+      "Melissabury",
+      "Claudiafurt",
+      "Scottshire",
+      "Port Kelsey",
+      "Andersonside",
+      "Reginaldport",
+      "Kristishire",
+      "South Billy",
+      "Stevenschester",
+      "East Traceybury",
+      "Burchshire",
+      "South Emily",
+      "East Mary",
+      "Andersonshire",
+      "Rossland",
+      "Lake Gregoryport",
+      "East Melissamouth"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 19930,
+    "max": 20000
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "bar",
+      "data": [
+        19992.7,
+        19992.7,
+        19990.7,
+        19987.0,
+        19985.9,
+        19985.4,
+        19985.0,
+        19981.6,
+        19981.1,
+        19980.6,
+        19977.2,
+        19976.9,
+        19975.3,
+        19974.6,
+        19971.1,
+        19968.3,
+        19968.3,
+        19965.5,
+        19964.4,
+        19963.9,
+        19961.5,
+        19958.2,
+        19950.7,
+        19950.5,
+        19949.4,
+        19949.3,
+        19947.7,
+        19945.0,
+        19944.2,
+        19942.8
+      ]
+    }
+  ]
+});
+        
+        var chart_7 = echarts.init(document.getElementById('chart_mean_7'));
+        chart_7.setOption({
+  "title": {
+    "text": "Average Quantity Sold by Category"
+  },
+  "tooltip": {},
+  "radar": {
+    "indicator": [
+      "Accessories",
+      "Electronics",
+      "Office Supplies"
+    ]
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "radar",
+      "data": [
+        {
+          "value": [
+            5.502255103934017,
+            5.499342013128617,
+            5.49792022999853
+          ],
+          "name": "Series"
+        }
+      ]
+    }
+  ]
+});
+        
+        var chart_8 = echarts.init(document.getElementById('chart_line_8'));
+        chart_8.setOption({
+  "title": {
+    "text": "Median Profit by Payment Method"
+  },
+  "tooltip": {
+    "trigger": "axis"
+  },
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "Cash",
+      "PayPal",
+      "Credit Card",
+      "Wire Transfer"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 581,
+    "max": 584
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "line",
+      "data": [
+        583.51,
+        582.7,
+        582.43,
+        581.93
+      ]
+    }
+  ]
+});
+        
+        var chart_9 = echarts.init(document.getElementById('chart_line_9'));
+        chart_9.setOption({
+  "title": {
+    "text": "Maximum Discount by Country"
+  },
+  "tooltip": {
+    "trigger": "axis"
+  },
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "Germany",
+      "France",
+      "China",
+      "India",
+      "USA",
+      "UK",
+      "Canada",
+      "Brazil",
+      "Japan",
+      "Australia"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": -0.75,
+    "max": 1.25
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "line",
+      "data": [
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    }
+  ]
+});
+        
+        var chart_10 = echarts.init(document.getElementById('chart_sum_10'));
+        chart_10.setOption({
+  "title": {
+    "text": "Total Profit by Sales Representative"
+  },
+  "tooltip": {},
+  "radar": {
+    "indicator": [
+      "Michael Smith",
+      "Michael Johnson",
+      "David Smith",
+      "Michael Williams",
+      "James Smith",
+      "Jennifer Smith",
+      "John Smith",
+      "Robert Smith",
+      "Christopher Smith",
+      "Michael Jones",
+      "Michael Brown",
+      "James Johnson",
+      "John Johnson",
+      "Jennifer Johnson",
+      "David Johnson",
+      "Robert Johnson",
+      "Michael Miller",
+      "Christopher Johnson",
+      "Michael Davis",
+      "William Smith",
+      "Matthew Smith",
+      "James Williams",
+      "David Williams",
+      "Jessica Smith",
+      "Joseph Smith",
+      "David Brown",
+      "Daniel Smith",
+      "David Jones",
+      "James Brown",
+      "Lisa Smith"
+    ]
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "radar",
+      "data": [
+        {
+          "value": [
+            3327241.6,
+            2648981.0200000005,
+            2246283.3200000003,
+            2244828.67,
+            2200793.82,
+            2102006.58,
+            2050137.7099999997,
+            2037130.3399999999,
+            1984224.56,
+            1936824.7600000007,
+            1858677.6200000003,
+            1760189.0000000002,
+            1698994.4900000002,
+            1685930.04,
+            1663478.3599999999,
+            1629594.5200000005,
+            1613648.4099999997,
+            1611341.0999999999,
+            1579797.1800000002,
+            1531542.4000000001,
+            1514451.94,
+            1447536.2099999997,
+            1440168.13,
+            1382022.0099999998,
+            1370373.4700000002,
+            1353069.64,
+            1352153.76,
+            1320649.53,
+            1318127.2999999998,
+            1309260.6199999996
+          ],
+          "name": "Series"
+        }
+      ]
+    }
+  ]
+});
+        
+        var chart_11 = echarts.init(document.getElementById('chart_mean_11'));
+        chart_11.setOption({
+  "title": {
+    "text": "Average Unit Price by Product"
+  },
+  "tooltip": {},
+  "xAxis": {
+    "name": "X"
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 1024.8,
+    "max": 1025.6000000000001,
+    "name": "Y"
+  },
+  "series": [
+    {
+      "symbolSize": 10,
+      "data": [
+        [
+          0,
+          1025.4975399738914
+        ],
+        [
+          1,
+          1025.1761337596256
+        ],
+        [
+          2,
+          1025.1105480523186
+        ],
+        [
+          3,
+          1025.0575347021863
+        ],
+        [
+          4,
+          1024.936397095333
+        ],
+        [
+          5,
+          1024.9099642937156
+        ],
+        [
+          6,
+          1024.8883860192334
+        ],
+        [
+          7,
+          1024.8823143819707
+        ]
+      ],
+      "type": "scatter"
+    }
+  ]
+});
+        
+        var chart_12 = echarts.init(document.getElementById('chart_count_12'));
+        chart_12.setOption({
+  "title": {
+    "text": "Transaction Count by Payment Method"
+  },
+  "tooltip": {},
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "Cash",
+      "Wire Transfer",
+      "PayPal",
+      "Credit Card"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 2022000,
+    "max": 2029000
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "bar",
+      "data": [
+        2027814,
+        2024924,
+        2024594,
+        2022668
+      ]
+    }
+  ]
+});
+        
+        var chart_13 = echarts.init(document.getElementById('chart_line_13'));
+        chart_13.setOption({
+  "title": {
+    "text": "Minimum Profit by Country"
+  },
+  "tooltip": {
+    "trigger": "axis"
+  },
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "Australia",
+      "Japan",
+      "Canada",
+      "India",
+      "France",
+      "Brazil",
+      "UK",
+      "USA",
+      "Germany",
+      "China"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 1.9000000000000001,
+    "max": 2.4000000000000004
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "line",
+      "data": [
+        2.32,
+        2.28,
+        2.23,
+        2.22,
+        2.17,
+        2.15,
+        2.11,
+        2.09,
+        2.03,
+        1.94
+      ]
+    }
+  ]
+});
+        
+        var chart_14 = echarts.init(document.getElementById('chart_mean_14'));
+        chart_14.setOption({
+  "title": {
+    "text": "Average Discount by Region"
+  },
+  "tooltip": {},
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "North",
+      "West",
+      "East",
+      "Central",
+      "South"
+    ]
+  },
+  "yAxis": {
+    "type": "value",
+    "min": 0.12490000000000001,
+    "max": 0.1252
+  },
+  "series": [
+    {
+      "name": "Series",
+      "type": "bar",
+      "data": [
+        0.12515463637887994,
+        0.1250720471945226,
+        0.12504272273455153,
+        0.12500571009986666,
+        0.12494937777360936
+      ]
+    }
+  ]
+});
+        
+        var chart_15 = echarts.init(document.getElementById('chart_pie_15'));
+        chart_15.setOption({
+  "title": {
+    "text": "Distribution of Payment Methods",
+    "left": "center"
+  },
+  "tooltip": {
+    "trigger": "item"
+  },
+  "series": [
+    {
+      "type": "pie",
+      "radius": "50",
+      "data": [
+        {
+          "name": "Credit Card",
+          "value": 2022668
+        },
+        {
+          "name": "PayPal",
+          "value": 2024594
+        },
+        {
+          "name": "Cash",
+          "value": 2027814
+        },
+        {
+          "name": "Wire Transfer",
+          "value": 2024924
+        }
+      ],
+      "emphasis": {
+        "itemStyle": {
+          "shadowBlur": 10,
+          "shadowOffsetX": 0,
+          "shadowColor": "rgba(0, 0, 0, 0.5)"
+        }
+      }
+    }
+  ]
+});
+        
+        var chart_16 = echarts.init(document.getElementById('chart_donut_16'));
+        chart_16.setOption({
+  "title": {
+    "text": "Regional Sales Distribution",
+    "left": "center"
+  },
+  "tooltip": {
+    "trigger": "item"
+  },
+  "series": [
+    {
+      "type": "pie",
+      "radius": [
+        "40%",
+        "70%"
+      ],
+      "avoidLabelOverlap": false,
+      "data": [
+        {
+          "name": "South",
+          "value": 1620632
+        },
+        {
+          "name": "Central",
+          "value": 1619061
+        },
+        {
+          "name": "East",
+          "value": 1617991
+        },
+        {
+          "name": "West",
+          "value": 1620188
+        },
+        {
+          "name": "North",
+          "value": 1622128
+        }
+      ],
+      "emphasis": {
+        "itemStyle": {
+          "shadowBlur": 10,
+          "shadowOffsetX": 0,
+          "shadowColor": "rgba(0, 0, 0, 0.5)"
+        }
+      }
+    }
+  ]
+});
+        
+
+        let currentFullscreenChart = null;
+
+        function enlargeChart(chartId) {
+            const original = echarts.getInstanceByDom(document.getElementById(chartId));
+            const option = original.getOption();
+
+            const existing = document.getElementById('fullscreenModal');
+            if (existing) existing.remove();
+
+            const modal = document.createElement('div');
+            modal.id = 'fullscreenModal';
+
+            const exitBtn = document.createElement('button');
+            exitBtn.id = 'exitButton';
+            exitBtn.innerText = '❌';
+            exitBtn.onclick = exitFullscreen;
+
+            const chartDiv = document.createElement('div');
+            chartDiv.id = 'fullscreenChart';
+
+            modal.appendChild(exitBtn);
+            modal.appendChild(chartDiv);
+            document.body.appendChild(modal);
+
+            currentFullscreenChart = echarts.init(chartDiv);
+            currentFullscreenChart.setOption(option);
+        }
+
+        function exitFullscreen() {
+            const modal = document.getElementById('fullscreenModal');
+            if (modal) {
+                if (currentFullscreenChart) {
+                    currentFullscreenChart.dispose();
+                    currentFullscreenChart = null;
+                }
+                modal.remove();
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                exitFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>

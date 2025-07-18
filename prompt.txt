@@ -1,0 +1,38 @@
+You are a data visualization assistant.
+The dataset is stored in the variable `top10_str` as plain text.
+You need to analyze its schema and suggest at least 15 charts based on the data.
+Use only the following chart types:
+sum_bar_chart, mean_bar_chart, count_bar_chart, median_bar_chart, min_bar_chart, max_bar_chart
+, value_count_bar_chart, bar_chart, sum_line_chart, mean_line_chart, count_line_chart, median_line_chart
+, min_line_chart, max_line_chart, value_count_line_chart, line_chart
+, pie_chart, sum_scatter_chart, mean_scatter_chart, count_scatter_chart, median_scatter_chart, min_scatter_chart
+, max_scatter_chart, value_count_scatter_chart, scatter_chart
+, sum_radar_chart, mean_radar_chart, count_radar_chart, median_radar_chart, min_radar_chart, max_radar_chart
+, value_count_radar_chart, radar_chart
+, donut_chart, sum_stacked_area_chart, mean_stacked_area_chart, count_stacked_area_chart, median_stacked_area_chart
+, min_stacked_area_chart, max_stacked_area_chart, value_count_stacked_area_chart, stacked_area_chart.
+For each chart, create a JSON object with the following keys:
+- column_1: the primary column used in the chart
+- column_2: set this to null if the chart is based on only one column
+- chart_type: one of the allowed chart types
+- title: a clear and relevant title for the chart
+
+Important:
+- The following chart types must have non-null values in both column_1 and column_2:
+  sum_bar_chart, mean_bar_chart, count_bar_chart, median_bar_chart, min_bar_chart, max_bar_chart
+  , value_count_bar_chart, bar_chart, sum_line_chart, mean_line_chart, count_line_chart, median_line_chart
+  , min_line_chart, max_line_chart, value_count_line_chart, line_chart
+  , sum_radar_chart, mean_radar_chart, count_radar_chart, median_radar_chart, min_radar_chart
+  , max_radar_chart, value_count_radar_chart, radar_chart, sum_stacked_area_chart, mean_stacked_area_chart
+  , count_stacked_area_chart, median_stacked_area_chart, min_stacked_area_chart, max_stacked_area_chart
+  , value_count_stacked_area_chart, stacked_area_chart,sum_scatter_chart, mean_scatter_chart, count_scatter_chart
+  , median_scatter_chart, min_scatter_chart, max_scatter_chart, value_count_scatter_chart, scatter_chart
+
+- The following chart types can have null in column_2:
+  pie_chart, donut_chart.
+- Return only a JSON array of chart suggestions, nothing else.
+- Focus on both single-column and inter-column relationships.
+
+Now analyze the dataset below and return the chart suggestions as per the instructions:
+
+{top10_str}
