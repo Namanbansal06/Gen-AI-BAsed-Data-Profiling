@@ -16,7 +16,7 @@ top10_str = "\n".join([str(row.asDict()) for row in top10])
 print("✅ Top 10 rows extracted.")
 
 # Step 3: Configure Gemini API
-genai.configure(api_key="AIzaSyBzkoYf6LzFjBP-1pRS5wd69HL_NEIByqs")
+genai.configure(api_key= YOUR_API_KEY)
 model = genai.GenerativeModel(model_name="models/gemini-1.5-flash-latest")
 
 # Step 4: Prompt Gemini
